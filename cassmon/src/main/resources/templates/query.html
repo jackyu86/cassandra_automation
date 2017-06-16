@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=">
+    <title>Query</title>
+    <script src="/js/react.min.js"></script>
+    <script src="/js/griddle.js"></script>
+    <script src="/js/react-dom.min.js"></script>
+    <script src="/js/browser.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+<div id="query_form"></div>
+<h2>结果</h2>
+<div id="ts"></div>
+<div id="result"></div>
+
+<script type="text/babel">
+    var QueryForm = React.createClass({
+            queryCQL : function(){
+                $("#result").html("")
+                $("#ts").html("")
+                $.post( "/q", {query:$("#query").val(), cluster:$("#cluster").val() },function( data ) {
+                    $("#ts").html("use "+data.time+" ms")
+                    ReactDOM.render(
+                            <Griddle results={data.rows} tableClassName="table" showFilter={true} resultsPerPage={20}
+                                     showSettings={true} />,
+                            document.getElementById('result')
+                    );
+                });
+            },
+            render: function() {
+                return (
+                        <form name="log_query">
+                            <textarea id="query" rows="10" cols="80">select * from sr.sku_profiles limit 1</textarea>
+                            <br/>
+                            <select name="cluster" id="cluster">
+                                <option value="172.20.107.47">主集群</option>
+                                <option value="172.20.107.25">配置</option>
+                                <option value="172.20.107.23">MV5/喜欢</option>
+                                <option value="172.20.107.18">O2O</option>
+                                <option value="172.20.107.20">清仓/常购</option>
+                            </select>
+                            <button type="button" onClick={this.queryCQL}>Query</button>
+                        </form>
+                );
+            }
+        });
+
+        ReactDOM.render(
+                <QueryForm/>,
+                document.getElementById('query_form')
+        );
+
+
+</script>
+</body>
+</html>

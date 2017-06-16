@@ -1,0 +1,16 @@
+{
+    "clusterName":"LutongCluster",
+    "seeds":["10.42.0.223"],
+    "allHosts":["10.42.0.223"],
+    "installPkg":"../../install/jgcass2.2.3.tgz",
+    "installPath":"/Users/bean/packages/apache-cassandra-2.2.3",
+    "commitlog_directory":"/Users/bean/Data/cassandra/commitlog",
+    "java_home":"/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home",
+    "data_file_directory" : "/Users/bean/Data/cassandra/data",
+    "commitlog_segment_size_in_mb":256,
+    "jmxPassword" : "dsx24r423dc",
+    "dc":"DC1",
+    "row_cache_size_in_mb" : 102400,
+    "ganglia_url" : ""
+}
+

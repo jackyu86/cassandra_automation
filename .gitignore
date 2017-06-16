@@ -1,0 +1,8 @@
+repo/intall/apache-cassandra-2.2.3
+autolib/.idea/
+cassmon/.idea/
+autolib/target
+cassmon/target
+autolib/*.iml
+cassmon/*.iml
+dashboard/target

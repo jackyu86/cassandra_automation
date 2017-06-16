@@ -1,0 +1,12 @@
+{
+    "clusterName":"HuangcunStagingCluster",
+    "seeds":["172.22.220.130","172.22.220.131"],
+    "allHosts":["172.22.220.130","172.22.220.131","172.22.220.132","172.22.220.133","172.22.220.134","172.22.220.135","172.22.220.136","172.22.220.137","172.22.220.138","172.22.220.139","172.22.220.140","172.22.220.141","172.22.220.142","172.22.220.143","172.22.220.144","172.22.220.145","172.22.220.146","172.22.220.147","172.22.220.148","172.22.220.149"],
+    "installPkg":"/export/App/deploy/repo/install/jgcass2.2.3.tgz",
+    "installPath":"/export/App/jgcass.jd.local/apache-cassandra-2.2.3",
+    "commitlog_directory":"/export/Data/cassandra/commitlog",
+    "data_file_directory" : "/export/Data/cassandra/data",
+    "java_home":"/export/servers/jdk1.7.0_71",
+    "jmxPassword" : "dsx24r423dc",
+    "row_cache_size_in_mb" : 102400
+}

@@ -1,0 +1,15 @@
+{
+    "clusterName":"Config Cluster",
+    "seeds":["172.19.153.47","172.20.107.25"],
+    "allHosts":["172.19.153.47","172.19.153.48","172.19.124.135","172.20.107.25","172.28.148.30"],
+    "installPkg":"../../install/jgcass2.2.3.tgz",
+    "installPath":"/export/App/jgcass.jd.local/apache-cassandra-2.2.3",
+    "commitlog_directory":"/export/Data/cassandra/commitlog",
+    "java_home":"/export/servers/jdk1.7.0_71",
+    "data_file_directory" : "/export/Data/cassandra/data",
+    "commitlog_segment_size_in_mb":1024,
+    "jmxPassword" : "dsx24r423dc",
+    "row_cache_size_in_mb" : 2048,
+    "ganglia_url" : ""
+}
+

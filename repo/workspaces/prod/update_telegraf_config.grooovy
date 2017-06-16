@@ -1,0 +1,59 @@
+import com.alibaba.fastjson.JSON;
+import com.jd.jg.admin.config.*;
+import com.jd.jg.admin.task.*;
+import com.jd.jg.admin.cmd.*;
+import com.jd.jg.admin.ssh.SshFactory;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+def get_table_cfg(ks,table){
+ return """
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=ReadTotalLatency",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=WriteTotalLatency",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=ReadLatency",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=CoordinatorReadLatency",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=SpeculativeRetries",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=LiveSSTableCount",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=MaxRowSize",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=TotalDiskSpaceUsed",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=EstimatedRowCount",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=PendingCompactions",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=SSTablesPerReadHistogram",
+	"/org.apache.cassandra.metrics:type=ColumnFamily,keyspace=${ks},scope=${table},name=TombstoneScannedHistogram",
+"""
+}
+
+tableCfg = ""
+tableCfg += get_table_cfg('sr','hot_market_list')
+/*
+tableCfg += get_table_cfg('sr','activity_profiles')
+tableCfg += get_table_cfg('sr','sku_profiles')
+tableCfg += get_table_cfg('catesr','user_cid1_rank_wx')
+tableCfg += get_table_cfg('catesr','user_cid2_rank_wx')
+tableCfg += get_table_cfg('catesr','user_cate_brand_profile2')
+tableCfg += get_table_cfg('ur','user_profiles')
+tableCfg += get_table_cfg('ur','user_profile_act')
+tableCfg += get_table_cfg('ur','user_profile_act_11')
+*/
+
+ScpTemplateCmd cmd = new ScpTemplateCmd();
+cmd.tplPath = "../../template/"
+cmd.tplName = 'telegraf.conf';
+cmd.remoteFile = '/Users/bean/packages/apache-cassandra-2.2.3/conf/telegraf.conf';
+
+new File(args[0]).eachLine{
+	cmd.model = new HashMap<>();
+	cmd.model.put("local_ip",it);
+	cmd.model.put("dc",args[1]);
+	cmd.model.put("database",'cassmetrics');
+	cmd.model.put("tableCfg",tableCfg);
+
+	cmd.execute(it)
+
+	SshFactory.getSSH(it).exec('killall -9 telegraf',200)
+	SshFactory.getSSH(it).exec('nohup telegraf -config /Users/bean/packages/apache-cassandra-2.2.3/conf/telegraf.conf &>/dev/null &',5)
+
+}
+
+System.exit(0)

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder  class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} %level [%thread] %class:%line>>%msg%n</pattern>
+        </encoder >
+    </appender>
+
+
+    <logger name="com.jd.jg.admin" level="INFO" />
+
+    <root level="WARN">
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>

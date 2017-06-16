@@ -1,0 +1,14 @@
+{
+    "clusterName":"MobileCluster",
+    "seeds":["172.20.107.20"],
+    "allHosts":["172.20.107.20"],
+    "installPkg":"../../install/jgcass2.2.3.tgz",
+    "installPath":"/export/App/jgcass.jd.local/apache-cassandra-2.2.3",
+    "commitlog_directory":"/export/Data/cassandra/commitlog",
+    "java_home":"/export/servers/jdk1.7.0_71",
+    "data_file_directory" : "/export/Data/cassandra/data",
+    "jmxPassword" : "dsx24r423dc",
+    "row_cache_size_in_mb" : 102400,
+    "ganglia_url" : ""
+}
+

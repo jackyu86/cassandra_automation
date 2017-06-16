@@ -1,0 +1,22 @@
+<#import "../layout/defaultLayout.ftl.html" as layout> 
+<@layout.myLayout "Home page">    
+
+<form name="sshcmd">
+    <textarea id="cmd" rows="3" cols="80">id</textarea>
+    <Button onclick="runssh();return false;">Run</Button>
+</form>
+
+Log:<div id="log">
+</div>
+Error:<div id="err">
+</div>
+
+<script language="JavaScript">
+    function runssh() {
+        $.post("/sshrun",{"cmd":$("#cmd").val()},function( data ) {
+            $("#log").html("<pre>"+data.log+"</pre>");
+            $("#err").html("<pre>"+data.err+"</pre>");
+        })
+    }
+</script>
+</@layout.myLayout>

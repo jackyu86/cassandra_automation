@@ -1,0 +1,16 @@
+{
+    "clusterName":"JinggangLangfang",
+    "seeds":["172.20.107.11","172.20.107.28","172.20.107.29"],
+    "allHosts":["172.20.107.11","172.20.107.28","172.20.107.29","172.20.107.30","172.20.107.31","172.20.107.32","172.20.107.33","172.20.107.34","172.20.107.35","172.20.107.36","172.20.107.37","172.20.107.38","172.20.107.39","172.20.107.40","172.20.107.41","172.20.107.42","172.20.107.43","172.20.107.44","172.20.107.45","172.20.107.46","172.20.107.47","172.20.107.48","172.20.107.49","172.20.107.50"],
+    "installPkg":"../../install/jgcass2.2.3.tgz",
+    "installPath":"/export/App/jgcass.jd.local/apache-cassandra-2.2.3",
+    "commitlog_directory":"/export/Data/cassandra/commitlog",
+    "java_home":"/export/servers/jdk1.7.0_71",
+    "data_file_directory" : "/export/Data/cassandra/data",
+    "commitlog_segment_size_in_mb":256,
+    "jmxPassword" : "dsx24r423dc",
+    "dc":"DC1",
+    "row_cache_size_in_mb" : 102400,
+    "ganglia_url" : ""
+}
+

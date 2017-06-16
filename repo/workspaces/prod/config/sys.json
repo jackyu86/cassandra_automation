@@ -1,0 +1,6 @@
+{
+    "templatePath":"./template",
+    "ganglia_pkg":"../../install/ganglia-3.6.0.tgz",
+    "ganglia_installpath":"/export/App/ganglia-3.6.0"
+}
+

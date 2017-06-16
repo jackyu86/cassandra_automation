@@ -1,0 +1,12 @@
+{
+    "clusterName":"LocalTestCluster",
+    "seeds":["192.168.200.67"],
+    "allHosts":["192.168.200.67","192.168.200.54"],
+    "installPkg":"/home/zhouji/jd/projects/se/cassandra-automation/repo/intall/jgcass2.2.3.tgz",
+    "installPath":"/export/cassandra/apache-cassandra-2.2.3",
+    "commitlog_directory":"/export/cassandra/data/commitlogs",
+    "data_file_directory" : "/export/cassandra/data/data",
+    "jmxPassword" : "dsx24r423dc",
+    "row_cache_size_in_mb" : 512,
+	"java_home" : "/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.45.x86_64/"
+}

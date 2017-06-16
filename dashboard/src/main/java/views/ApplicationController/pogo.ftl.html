@@ -1,0 +1,52 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "Pogo">
+
+    <form name="sshcmd">
+        Hosts: <textarea id="hosts" rows="1" cols="80">192.168.200.{55..57}</textarea> <br>
+        Cmds: <textarea id="cmd" rows="3" cols="80">id</textarea>
+        <Button onclick="pogo();return false;">Run</Button>
+    </form>
+
+    <div id="log"></div>
+
+    <script language="JavaScript">
+
+        function sshrun(cmd, host) {
+            $.post("/sshrun",{"cmd":cmd, "host":host},function( data ) {
+                var r = "<div>"+host+"<div><pre>"+data.log+"</pre></div><div><pre>"+data.err+"</pre></div></div>";
+                $("#log").append(r)
+            })
+        }
+
+        function pogo() {
+            $("#log").html('<div id="log"></div>')
+            var hostStr = $("#hosts").val();
+            var hostArr = hostStr.split(",")
+            var hosts = new Array()
+            var cmd = $("#cmd").val()
+
+            $.each(hostArr,function (i) {
+                var s = hostArr[i]
+                if( s.contains("{")){
+
+                    var p1 = s.indexOf("{")
+                    var p2 = s.indexOf("..")
+                    var p3 = s.indexOf("}")
+
+                    var start = parseInt(s.substr(p1+1,p2))
+                    var end = parseInt(s.substr(p2+2,p3))
+                    for( var i = start; i <= end; i++){
+                        //hosts.push()
+                        var h = s.substr(0,p1)+i
+                        console.log(h)
+                        sshrun(cmd,h)
+                    }
+                }
+                else{
+                    hosts.push(s)
+                    sshrun(cmd,s)
+                }
+            })
+        }
+    </script>
+</@layout.myLayout>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=">
+    <title>DI Job Monitor</title>
+    <script src="/js/react.min.js"></script>
+    <script src="/js/griddle.js"></script>
+    <script src="/js/react-dom.min.js"></script>
+    <script src="/js/browser.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="form_div"></div>
+
+<h2>日志</h2>
+<div id="log_list"></div>
+
+<script type="text/babel">
+    Date.prototype.getFromFormat = function(format) {
+        var yyyy = this.getFullYear().toString();
+        format = format.replace(/yyyy/g, yyyy)
+        var mm = (this.getMonth()+1).toString();
+        format = format.replace(/mm/g, (mm[1]?mm:"0"+mm[0]));
+        var dd  = this.getDate().toString();
+        format = format.replace(/dd/g, (dd[1]?dd:"0"+dd[0]));
+        var hh = this.getHours().toString();
+        format = format.replace(/hh/g, (hh[1]?hh:"0"+hh[0]));
+        var ii = this.getMinutes().toString();
+        format = format.replace(/ii/g, (ii[1]?ii:"0"+ii[0]));
+        var ss  = this.getSeconds().toString();
+        format = format.replace(/ss/g, (ss[1]?ss:"0"+ss[0]));
+        return format;
+    };
+
+    var DateComponent = React.createClass({
+        render: function(){
+            var date = "-";
+            if( this.props.data != null ){
+                date = new Date(this.props.data).getFromFormat('yyyy-mm-dd hh:ii:ss');
+            }
+            return <span>{date}</span>
+        }
+    });
+
+    var columnMeta = [
+        {
+            "columnName": "message",
+        },
+        {
+            "columnName": "cql",
+        },
+        {
+            "columnName": "ts",
+            "customComponent": DateComponent
+        }
+    ];
+
+    var QueryForm = React.createClass({
+        queryLog : function(){
+            $.get( "/logs?app="+$("#appStr").val()+"&id="+$("#idStr").val(), function( data ) {
+                ReactDOM.render(
+                        <Griddle results={data} tableClassName="table" showFilter={true} resultsPerPage={20} initialSort={"ts"}
+                                 showSettings={true} initialSortAscending={false} columns={["app", "id", "type", "ts"]}  columnMetadata={columnMeta}/>,
+                        document.getElementById('log_list')
+                );
+            });
+        },
+        render: function() {
+            return (
+                    <form name="log_query">
+                        APP:<input type="text" name="app" id="appStr"/>
+                        ID:<input type="text" name="id" id="idStr"/>
+                        <button type="button" onClick={this.queryLog} >查询</button>
+                    </form>
+            );
+        }
+    });
+
+    ReactDOM.render(
+            <QueryForm/>,
+            document.getElementById('form_div')
+    );
+
+</script>
+</body>
+</html>
